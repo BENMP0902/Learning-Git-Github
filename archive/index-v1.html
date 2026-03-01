@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Hobbie: Codificar</title>
+    <style>
+        /* Estilos básicos para demostración */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-theme {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+
+        .theme-toggle:hover {
+            background-color: white;
+            color: #667eea;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        body.dark-theme section {
+            background: #2d2d2d;
+        }
+
+        section.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        body.dark-theme h2 {
+            color: #8fa4f3;
+        }
+
+        p, li {
+            margin-bottom: 0.8rem;
+        }
+
+        ul, ol {
+            padding-left: 2rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 1rem 0;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        img.loaded {
+            opacity: 1;
+        }
+
+        blockquote {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-left: 4px solid #667eea;
+            font-style: italic;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        body.dark-theme blockquote {
+            background: #404040;
+            color: #e0e0e0;
+        }
+
+        form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        body.dark-theme label {
+            color: #ccc;
+        }
+
+        input, textarea {
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        body.dark-theme input,
+        body.dark-theme textarea {
+            background: #404040;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .success {
+            color: #27ae60;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        body.dark-theme .success-message {
+            background: #1e4d2e;
+            color: #4ade80;
+            border-color: #2d5a3d;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            main {
+                padding: 8rem 1rem 2rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Mi Hobbie: Codificar</h1>
+            <nav>
+                <ul>
+                    <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li><a href="#por-que" class="nav-link">¿Por qué me gusta?</a></li>
+                    <li><a href="#lenguajes" class="nav-link">Lenguajes</a></li>
+                    <li><a href="#frase" class="nav-link">Frase</a></li>
+                    <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">🌙 Modo Oscuro</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="scroll-section">
+            <h2>Bienvenido a mi mundo de código</h2>
+            <p>Codificar es más que una actividad para mí, es una forma de expresar ideas, resolver problemas y construir cosas útiles.</p>
+            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=300&fit=crop" 
+                 alt="Imagen de codificación" 
+                 class="lazy-image"
+                 data-src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=300&fit=crop">
+        </section>
+
+        <section id="por-que" class="scroll-section">
+            <h2>¿Por qué me gusta codificar?</h2>
+            <p>Me gusta porque:</p>
+            <ul>
+                <li>Puedo crear mis propios programas.</li>
+                <li>Desarrollo mi lógica y creatividad.</li>
+                <li>Siempre estoy aprendiendo algo nuevo.</li>
+                <li>Puedo ayudar a otros con mis proyectos.</li>
+            </ul>
+        </section>
+
+        <section id="lenguajes" class="scroll-section">
+            <h2>Lenguajes que uso o quiero aprender</h2>
+            <ol>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>Python</li>
+                <li>Dart</li>
+            </ol>
+        </section>
+
+        <section id="frase" class="scroll-section">
+            <h2>Frase motivadora</h2>
+            <blockquote>
+                "El código es como la poesía: cuando funciona, es hermoso." – Anonymous
+            </blockquote>
+        </section>
+
+        <section id="contacto" class="scroll-section">
+            <h2>Contacto</h2>
+            <p>¿Quieres enviarme un mensaje? Llena este formulario</p>
+            
+            <div class="success-message" id="successMessage">
+                ¡Mensaje enviado con éxito! Te contactaré pronto.
+            </div>
+            
+            <form id="form-contacto">
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                    <div class="error" id="nombreError"></div>
+                </div>
+
+                <div>
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
+                    <div class="error" id="emailError"></div>
+                </div>
+
+                <div>
+                    <label for="mensaje">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                    <div class="error" id="mensajeError"></div>
+                </div>
+
+                <button type="submit" id="submitBtn">
+                    Enviar
+                    <span class="loading" id="loadingSpinner" style="display: none;"></span>
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Mi Página Personal. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // ===========================================
+        // FUNCIONALIDADES JAVASCRIPT IMPLEMENTADAS
+        // ===========================================
+
+        // 1. NAVEGACIÓN SUAVE
+        // Permite desplazamiento suave entre secciones
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 2. TEMA OSCURO/CLARO
+        // Permite alternar entre temas y guarda la preferencia
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Cargar tema guardado
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️ Modo Claro';
+        }
+
+        themeToggle.addEventListener('click', function() {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                themeToggle.textContent = '☀️ Modo Claro';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeToggle.textContent = '🌙 Modo Oscuro';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // 3. ANIMACIONES AL HACER SCROLL
+        // Elementos aparecen con animaciones al entrar en viewport
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observar todas las secciones
+        document.querySelectorAll('.scroll-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // 4. LAZY LOADING PARA IMÁGENES
+        // Carga imágenes solo cuando están a punto de ser visibles
+        const imageObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.add('loaded');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        document.querySelectorAll('.lazy-image').forEach(img => {
+            imageObserver.observe(img);
+        });
+
+        // 5. VALIDACIÓN Y ENVÍO DEL FORMULARIO
+        // Validación en tiempo real y envío sin recargar página
+        const form = document.getElementById('form-contacto');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const successMessage = document.getElementById('successMessage');
+
+        // Validación en tiempo real
+        const validators = {
+            nombre: (value) => {
+                if (!value.trim()) return 'El nombre es requerido';
+                if (value.trim().length < 2) return 'El nombre debe tener al menos 2 caracteres';
+                return '';
+            },
+            email: (value) => {
+                if (!value.trim()) return 'El email es requerido';
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) return 'Email inválido';
+                return '';
+            },
+            mensaje: (value) => {
+                if (!value.trim()) return 'El mensaje es requerido';
+                if (value.trim().length < 10) return 'El mensaje debe tener al menos 10 caracteres';
+                return '';
+            }
+        };
+
+        // Validar campo individual
+        function validateField(fieldName, value) {
+            const errorElement = document.getElementById(fieldName + 'Error');
+            const error = validators[fieldName](value);
+            
+            errorElement.textContent = error;
+            return !error;
+        }
+
+        // Agregar validación en tiempo real
+        Object.keys(validators).forEach(fieldName => {
+            const field = document.getElementById(fieldName);
+            field.addEventListener('blur', function() {
+                validateField(fieldName, this.value);
+            });
+            
+            field.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    validateField(fieldName, this.value);
+                }
+            });
+        });
+
+        // Manejar envío del formulario
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Validar todos los campos
+            const fields = ['nombre', 'email', 'mensaje'];
+            let isValid = true;
+            
+            fields.forEach(fieldName => {
+                const field = document.getElementById(fieldName);
+                if (!validateField(fieldName, field.value)) {
+                    isValid = false;
+                }
+            });
+            
+            if (!isValid) return;
+            
+            // Mostrar loading
+            submitBtn.disabled = true;
+            loadingSpinner.style.display = 'inline-block';
+            
+            try {
+                // Simular envío (aquí irían los datos a un servidor)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Mostrar mensaje de éxito
+                successMessage.style.display = 'block';
+                form.reset();
+                
+                // Ocultar mensaje después de 5 segundos
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+                
+            } catch (error) {
+                alert('Error al enviar el mensaje. Inténtalo de nuevo.');
+            } finally {
+                // Ocultar loading
+                submitBtn.disabled = false;
+                loadingSpinner.style.display = 'none';
+            }
+        });
+
+        // 6. MEJORA DE ACCESIBILIDAD
+        // Manejo de navegación por teclado
+        document.addEventListener('keydown', function(e) {
+            // Alt + T para cambiar tema
+            if (e.altKey && e.key === 't') {
+                e.preventDefault();
+                themeToggle.click();
+            }
+        });
+
+        console.log('🚀 Funcionalidades JavaScript cargadas exitosamente:');
+        console.log('✅ Navegación suave');
+        console.log('✅ Tema oscuro/claro con persistencia');
+        console.log('✅ Animaciones al hacer scroll');
+        console.log('✅ Lazy loading de imágenes');
+        console.log('✅ Validación de formulario en tiempo real');
+        console.log('✅ Envío de formulario sin recarga');
+        console.log('✅ Mejoras de accesibilidad');
+    </script>
+</body>
+</html>
