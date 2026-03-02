@@ -32,3 +32,5 @@ build/
 *.min.js
 *.min.css
 EOF
+
+.gitignore

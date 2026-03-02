@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio - Desarrollo Web</title>
+    <style>
+        /* ===========================================
+           RESET Y VARIABLES CSS
+           =========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Colores profesionales */
+            --primary-color: #2563eb;        /* Azul corporativo */
+            --primary-dark: #1e40af;
+            --secondary-color: #64748b;      /* Gris azulado */
+            --text-color: #1e293b;
+            --text-light: #64748b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            
+            /* Dark theme */
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --dark-text: #f1f5f9;
+            --dark-text-light: #94a3b8;
+            --dark-border: #334155;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        /* ===========================================
+           ESTILOS BASE
+           =========================================== */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-theme {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        /* ===========================================
+           HEADER Y NAVEGACIÓN
+           =========================================== */
+        header {
+            background: var(--card-bg);
+            color: var(--text-color);
+            padding: 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        body.dark-theme header {
+            background: var(--dark-card);
+            border-bottom-color: var(--dark-border);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) var(--spacing-lg);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            letter-spacing: -0.025em;
+        }
+
+        body.dark-theme h1 {
+            color: var(--dark-text);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+        }
+
+        body.dark-theme nav a {
+            color: var(--dark-text-light);
+        }
+
+        body.dark-theme nav a:hover {
+            background-color: var(--dark-bg);
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: var(--spacing-sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        body.dark-theme .theme-toggle {
+            background: var(--dark-bg);
+            border-color: var(--dark-border);
+            color: var(--dark-text);
+        }
+
+        /* ===========================================
+           CONTENIDO PRINCIPAL
+           =========================================== */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: calc(5rem + var(--spacing-lg)) var(--spacing-lg) var(--spacing-lg);
+        }
+
+        section {
+            margin-bottom: var(--spacing-xl);
+            padding: var(--spacing-lg);
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        body.dark-theme section {
+            background: var(--dark-card);
+            border-color: var(--dark-border);
+        }
+
+        section.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            color: var(--text-color);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.75rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        body.dark-theme h2 {
+            color: var(--dark-text);
+        }
+
+        p, li {
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        body.dark-theme p,
+        body.dark-theme li {
+            color: var(--dark-text-light);
+        }
+
+        ul, ol {
+            padding-left: var(--spacing-lg);
+        }
+
+        li {
+            padding-left: var(--spacing-xs);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-md) 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        img.loaded {
+            opacity: 1;
+        }
+
+        blockquote {
+            background: var(--bg-color);
+            padding: var(--spacing-md);
+            border-left: 4px solid var(--primary-color);
+            font-style: italic;
+            border-radius: 6px;
+            margin: var(--spacing-md) 0;
+            color: var(--text-light);
+        }
+
+        body.dark-theme blockquote {
+            background: var(--dark-bg);
+            color: var(--dark-text-light);
+        }
+
+        /* ===========================================
+           FORMULARIO
+           =========================================== */
+        form {
+            display: grid;
+            gap: var(--spacing-md);
+        }
+
+        label {
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            margin-bottom: var(--spacing-xs);
+            display: block;
+        }
+
+        body.dark-theme label {
+            color: var(--dark-text);
+        }
+
+        input, textarea {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        body.dark-theme input,
+        body.dark-theme textarea {
+            background: var(--dark-bg);
+            border-color: var(--dark-border);
+            color: var(--dark-text);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .success {
+            color: #16a34a;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+            box-shadow: var(--shadow-lg);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* ===========================================
+           COMPONENTES UI
+           =========================================== */
+        .loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            padding: var(--spacing-sm);
+            border-radius: 6px;
+            margin: var(--spacing-md) 0;
+            border: 1px solid #bbf7d0;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        body.dark-theme .success-message {
+            background: #14532d;
+            color: #86efac;
+            border-color: #166534;
+        }
+
+        /* ===========================================
+           FOOTER
+           =========================================== */
+        footer {
+            background: var(--card-bg);
+            color: var(--text-light);
+            text-align: center;
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+            border-top: 1px solid var(--border-color);
+        }
+
+        body.dark-theme footer {
+            background: var(--dark-card);
+            color: var(--dark-text-light);
+            border-top-color: var(--dark-border);
+        }
+
+        /* ===========================================
+           RESPONSIVE
+           =========================================== */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+                padding: var(--spacing-sm);
+            }
+
+            nav ul {
+                gap: 0.25rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.75rem;
+            }
+
+            main {
+                padding: calc(7rem + var(--spacing-md)) var(--spacing-sm) var(--spacing-sm);
+            }
+
+            section {
+                padding: var(--spacing-md);
+            }
+
+            h1 {
+                font-size: 1.25rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .theme-toggle {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Portafolio - Desarrollo Web</h1>
+            <nav>
+                <ul>
+                    <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li><a href="#por-que" class="nav-link">Motivación</a></li>
+                    <li><a href="#lenguajes" class="nav-link">Tecnologías</a></li>
+                    <li><a href="#frase" class="nav-link">Inspiración</a></li>
+                    <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">🌙 Tema Oscuro</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="scroll-section">
+            <h2>Bienvenido a mi portafolio</h2>
+            <p>El desarrollo web es más que código: es la capacidad de transformar ideas en soluciones digitales. Aquí documento mi aprendizaje y proyectos en ingeniería de software.</p>
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=400&fit=crop&q=80" 
+                 alt="Espacio de trabajo de desarrollo" 
+                 class="lazy-image"
+                 data-src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=400&fit=crop&q=80">
+        </section>
+
+        <section id="por-que" class="scroll-section">
+            <h2>Por qué desarrollo software</h2>
+            <p>La programación me permite:</p>
+            <ul>
+                <li>Crear soluciones a problemas reales mediante código</li>
+                <li>Desarrollar pensamiento lógico y habilidades analíticas</li>
+                <li>Mantenerme en constante aprendizaje de nuevas tecnologías</li>
+                <li>Contribuir a proyectos que impactan a otros usuarios</li>
+            </ul>
+        </section>
+
+        <section id="lenguajes" class="scroll-section">
+            <h2>Stack tecnológico</h2>
+            <ol>
+                <li><strong>HTML5</strong> - Estructura semántica</li>
+                <li><strong>CSS3</strong> - Diseño y maquetación</li>
+                <li><strong>JavaScript</strong> - Interactividad y lógica</li>
+                <li><strong>Python</strong> - Backend y automatización</li>
+                <li><strong>Dart</strong> - Desarrollo móvil (Flutter)</li>
+            </ol>
+        </section>
+
+        <section id="frase" class="scroll-section">
+            <h2>Filosofía de desarrollo</h2>
+            <blockquote>
+                "El código limpio no se escribe siguiendo un conjunto de reglas. No te conviertes en un artesano del software aprendiendo una lista de heurísticas. El profesionalismo y la artesanía provienen de valores que impulsan las disciplinas." — Robert C. Martin
+            </blockquote>
+        </section>
+
+        <section id="contacto" class="scroll-section">
+            <h2>Contacto profesional</h2>
+            <p>¿Tienes un proyecto en mente o quieres colaborar? Completa el formulario:</p>
+            
+            <div class="success-message" id="successMessage">
+                ✓ Mensaje enviado correctamente. Te contactaré a la brevedad.
+            </div>
+            
+            <form id="form-contacto">
+                <div>
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" required>
+                    <div class="error" id="nombreError"></div>
+                </div>
+
+                <div>
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" name="email" placeholder="contacto@ejemplo.com" required>
+                    <div class="error" id="emailError"></div>
+                </div>
+
+                <div>
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="mensaje" placeholder="Describe brevemente tu proyecto o consulta..." required></textarea>
+                    <div class="error" id="mensajeError"></div>
+                </div>
+
+                <button type="submit" id="submitBtn">
+                    Enviar mensaje
+                    <span class="loading" id="loadingSpinner" style="display: none;"></span>
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Portafolio de Desarrollo Web. Construido con HTML, CSS y JavaScript.</p>
+    </footer>
+
+    <script>
+        // ===========================================
+        // FUNCIONALIDADES JAVASCRIPT
+        // ===========================================
+
+        // 1. NAVEGACIÓN SUAVE
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 2. TEMA OSCURO/CLARO
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️ Tema Claro';
+        }
+
+        themeToggle.addEventListener('click', function() {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                themeToggle.textContent = '☀️ Tema Claro';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeToggle.textContent = '🌙 Tema Oscuro';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // 3. ANIMACIONES AL HACER SCROLL
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // 4. LAZY LOADING PARA IMÁGENES
+        const imageObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.add('loaded');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        document.querySelectorAll('.lazy-image').forEach(img => {
+            imageObserver.observe(img);
+        });
+
+        // 5. VALIDACIÓN Y ENVÍO DEL FORMULARIO
+        const form = document.getElementById('form-contacto');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const successMessage = document.getElementById('successMessage');
+
+        const validators = {
+            nombre: (value) => {
+                if (!value.trim()) return 'El nombre es requerido';
+                if (value.trim().length < 2) return 'El nombre debe tener al menos 2 caracteres';
+                return '';
+            },
+            email: (value) => {
+                if (!value.trim()) return 'El email es requerido';
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) return 'Formato de email inválido';
+                return '';
+            },
+            mensaje: (value) => {
+                if (!value.trim()) return 'El mensaje es requerido';
+                if (value.trim().length < 10) return 'El mensaje debe tener al menos 10 caracteres';
+                return '';
+            }
+        };
+
+        function validateField(fieldName, value) {
+            const errorElement = document.getElementById(fieldName + 'Error');
+            const error = validators[fieldName](value);
+            
+            errorElement.textContent = error;
+            return !error;
+        }
+
+        Object.keys(validators).forEach(fieldName => {
+            const field = document.getElementById(fieldName);
+            field.addEventListener('blur', function() {
+                validateField(fieldName, this.value);
+            });
+            
+            field.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    validateField(fieldName, this.value);
+                }
+            });
+        });
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const fields = ['nombre', 'email', 'mensaje'];
+            let isValid = true;
+            
+            fields.forEach(fieldName => {
+                const field = document.getElementById(fieldName);
+                if (!validateField(fieldName, field.value)) {
+                    isValid = false;
+                }
+            });
+            
+            if (!isValid) return;
+            
+            submitBtn.disabled = true;
+            loadingSpinner.style.display = 'inline-block';
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                successMessage.style.display = 'block';
+                form.reset();
+                
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+                
+            } catch (error) {
+                alert('Error al enviar el mensaje. Inténtalo de nuevo.');
+            } finally {
+                submitBtn.disabled = false;
+                loadingSpinner.style.display = 'none';
+            }
+        });
+
+        // 6. ACCESIBILIDAD - ATAJOS DE TECLADO
+        document.addEventListener('keydown', function(e) {
+            if (e.altKey && e.key === 't') {
+                e.preventDefault();
+                themeToggle.click();
+            }
+        });
+
+        console.log('✅ Portafolio cargado correctamente');
+    </script>
+</body>
+</html>

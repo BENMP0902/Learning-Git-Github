@@ -20,6 +20,11 @@ mi-portafolio/
 ├── index.html        # Página principal
 ├── estilos.css       # Estilos personalizados
 └── README.md         # Este archivo
+
+Ramas:
+├── main                     # Producción
+├── develop                  # Desarrollo
+└── feature/add-javascript-interactions  # Feature en progreso
 ```
 
 ## 📚 Aprendizaje Continuo
